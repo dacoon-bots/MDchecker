@@ -40,6 +40,7 @@ async def on_message(message):
                             open(str(member.id)+'.makerdollar', 'w').write('1000')
                             open(str(member.id)+'.work', 'w').write('nowork')
                             open(str(member.id)+'.check', 'w').write('nocheck')
+                            open(str(member.id)+'.steal', 'w').write('nosteal')
                             open('list.txt', 'a').writelines("\n"+str(member.id))
                             ax+=1
         await message.channel.send(str(ax) + "명이 세팅 되었습니다.")
@@ -257,48 +258,107 @@ async def on_message(message):
             await message.channel.send(embed = embed)
 
     if message.content.startswith(".도둑질"):
-        if len(message.mentions)==1:
-            goed=random.randint(1,3)
-            cost=random.randint(1, 3000)
-            if goed==2:
-                hasb=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())
-                if cost>=hasb:
-                    embed = discord.Embed(title = "상대방의 전 재산인 "+str(hasb)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
-                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
-                    await message.channel.send(embed = embed)
-                    open(str(message.mentions[0].id)+'.makerdollar','w').write('0')
-                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+hasb
-                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+        stole=open(str(message.author.id)+'.steal','r').read()
+        time=datetime.datetime.utcnow()+timedelta(hours=9)
+       
+        if stole=="nosteal":
+            haha=str(time.year)+' '+str(time.month)+' '+str(time.day)+' '+str(time.hour)+' '+str(time.minute)+' '+str(time.second)
+            open(str(message.author.id)+'.steal','w').write(haha)
+            if len(message.mentions)==1:
+                goed=random.randint(1,3)
+                cost=random.randint(1, 1000)
+                if goed==2:
+                    hasb=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())
+                    if cost>=hasb:
+                        embed = discord.Embed(title = "상대방의 전 재산인 "+str(hasb)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                        embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                        await message.channel.send(embed = embed)
+                        open(str(message.mentions[0].id)+'.makerdollar','w').write('0')
+                        hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+hasb
+                        open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                    else:
+                        embed = discord.Embed(title = str(cost)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                        embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                        await message.channel.send(embed = embed)
+                        hasg=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())-cost
+                        open(str(message.mentions[0].id)+'.makerdollar','w').write(str(hasg))
+                        hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+cost
+                        open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
                 else:
-                    embed = discord.Embed(title = str(cost)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
-                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
-                    await message.channel.send(embed = embed)
-                    hasg=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())-cost
-                    open(str(message.mentions[0].id)+'.makerdollar','w').write(str(hasg))
-                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+cost
-                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                    hasb=int(open(str(message.author.id)+'.makerdollar','r').read())
+                    if cost>=hasb:
+                        embed = discord.Embed(title = str(random.randint(1, 1000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 전 재산인 "+str(hasb)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                        embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                        await message.channel.send(embed = embed)
+                        open(str(message.author.id)+'.makerdollar','w').write("0")
+                    else:
+                        embed = discord.Embed(title = str(random.randint(1, 1000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                        embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                        await message.channel.send(embed = embed)
+                        hasg=int(open(str(message.author.id)+'.makerdollar','r').read())-cost
+                        open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
             else:
-                hasb=int(open(str(message.author.id)+'.makerdollar','r').read())
-                if cost>=hasb:
-                    embed = discord.Embed(title = str(random.randint(1, 3000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 전 재산인 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
-                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
-                    await message.channel.send(embed = embed)
-                    open(str(message.author.id)+'.makerdollar','w').write("0")
-                else:
-                    embed = discord.Embed(title = str(random.randint(1, 3000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
-                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
-                    await message.channel.send(embed = embed)
-                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())-cost
-                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                embed = discord.Embed(title = "도둑질할 사람을 멘션해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                await message.channel.send(embed = embed)
         else:
-            embed = discord.Embed(title = "도둑질할 사람을 멘션해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
-            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
-            await message.channel.send(embed = embed)
+            tim=stole.split()
+            timd=datetime.datetime(year=int(tim[0]),month=int(tim[1]),day=int(tim[2]),hour=int(tim[3]),minute=int(tim[4]),second=int(tim[5]))+datetime.timedelta(minutes=10)
+            if timd<=datetime.datetime.utcnow()+timedelta(hours=9):
+                haha=str(time.year)+' '+str(time.month)+' '+str(time.day)+' '+str(time.hour)+' '+str(time.minute)+' '+str(time.second)
+                open(str(message.author.id)+'.steal','w').write(haha)
+                if len(message.mentions)==1:
+                    goed=random.randint(1,3)
+                    cost=random.randint(1, 1000)
+                    if goed==2:
+                        hasb=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())
+                        if cost>=hasb:
+                            embed = discord.Embed(title = "상대방의 전 재산인 "+str(hasb)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                            await message.channel.send(embed = embed)
+                            open(str(message.mentions[0].id)+'.makerdollar','w').write('0')
+                            hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+hasb
+                            open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                        else:
+                            embed = discord.Embed(title = str(cost)+"<:makerdollar:686564265217360089>를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                            await message.channel.send(embed = embed)
+                            hasg=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())-cost
+                            open(str(message.mentions[0].id)+'.makerdollar','w').write(str(hasg))
+                            hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+cost
+                            open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                    else:
+                        hasb=int(open(str(message.author.id)+'.makerdollar','r').read())
+                        if cost>=hasb:
+                            embed = discord.Embed(title = str(random.randint(1, 1000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 전 재산인 "+str(hasb)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                            await message.channel.send(embed = embed)
+                            open(str(message.author.id)+'.makerdollar','w').write("0")
+                        else:
+                            embed = discord.Embed(title = str(random.randint(1, 1000))+"<:makerdollar:686564265217360089>를 훔치려다 메이커에게 걸려 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                            await message.channel.send(embed = embed)
+                            hasg=int(open(str(message.author.id)+'.makerdollar','r').read())-cost
+                            open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                else:
+                    embed = discord.Embed(title = "도둑질할 사람을 멘션해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                    await message.channel.send(embed = embed)
+            else:
+                embed = discord.Embed(title = str(timd.month)+'월 '+str(timd.day)+'일 '+str(timd.hour)+'시 '+str(timd.minute)+'분 '+str(timd.second)+'초 부터 도둑질을 할 수 있습니다.', color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                await message.channel.send(embed = embed)
 
     if message.content == ".랭킹":
         lists=open('list.txt','r').read().split('\n')

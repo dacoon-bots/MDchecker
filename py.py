@@ -12,7 +12,7 @@ helped="""`ㅁ지갑` : 현재 내 MD를 확인합니다.
 `ㅁ송금 <돈> <멘션>` : 유저에게 MD를 보냅니다.
 `ㅁ돈벌기` : 1시간마다 사용할 수 있으며 1000<:makerdollar:686564265217360089>~2000<:makerdollar:686564265217360089>를 법니다.
 `ㅁ출석체크` : 하루에 한번 1000<:makerdollar:686564265217360089>를 받습니다.
-`ㅁ도둑질 <멘션>` : 33% 확률로 1<:makerdollar:686564265217360089>~3000<:makerdollar:686564265217360089>를 훔쳐오고 67% 의 확률로 1<:makerdollar:686564265217360089>~3000<:makerdollar:686564265217360089>를 벌금으로 냅니다.
+`ㅁ도둑질 <멘션>` : 40% 확률로 1<:makerdollar:686564265217360089>~3000<:makerdollar:686564265217360089>를 훔쳐오고 60% 의 확률로 1<:makerdollar:686564265217360089>~3000<:makerdollar:686564265217360089>를 벌금으로 냅니다.
 `ㅁ랭킹` : <:makerdollar:686564265217360089>를 많이 가진 순서대로 1위부터 20위까지 나열합니다.
 """
 
@@ -159,7 +159,7 @@ async def on_message(message):
                     open(str(message.author.id)+'.makerdollar','w').write(str(has+cost*4))
 
     if message.content == "ㅁ도움":
-        embed = discord.Embed(title = "명령어가 작동을 안 할시 `.세팅`을 입력해 주세요.", description = helped, color = 0xffc830, timestamp = datetime.datetime.utcnow())
+        embed = discord.Embed(title = "명령어가 작동을 안 할시 `ㅁ세팅`을 입력해 주세요.", description = helped, color = 0xffc830, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)

@@ -13,6 +13,7 @@ helped="""`.지갑` : 현재 내 MD를 확인합니다.
 `.돈벌기` : 1시간마다 사용할 수 있으며 1000:makerdollar:~2000:makerdollar:를 법니다.
 `.출석체크` : 하루에 한번 1000:makerdollar:를 받습니다.
 `.도둑질 <멘션>` : 33% 확률로 1:makerdollar:~3000:makerdollar:를 훔쳐오고 67% 의 확률로 1:makerdollar:~3000:makerdollar:를 벌금으로 냅니다.
+`.랭킹` : :makerdollar:를 많이 가진 순서대로 1위부터 20위까지 나열합니다.
 """
 
 app = discord.Client()

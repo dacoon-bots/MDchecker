@@ -206,11 +206,11 @@ async def on_message(message):
             tim=[]
             for x in range(len(timf)):
                 tim.append(int(timf[x]))
-            if datetime.datetime.now()>=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+datetime.timedelta(hours=4):
+            if datetime.datetime.utcnow()+timedelta(hours=9)>=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+timedelta(hours=4):
                 mon=random.randint(20, 100)
                 has=int(open(str(message.author.id)+'.makerdollar','r').read())
                 open(str(message.author.id)+'.makerdollar','w').write(str(has+mon))
-                time=datetime.datetime.now()
+                time=datetime.datetime.utcnow()+timedelta(hours=9)
                 haha=str(time.year)+' '+str(time.month)+' '+str(time.day)+' '+str(time.hour)+' '+str(time.minute)+' '+str(time.second)
                 open(str(message.author.id)+'.work','w').write(haha)
                 embed = discord.Embed(title = "일을 해서 "+str(mon)+"MD를 벌었습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())

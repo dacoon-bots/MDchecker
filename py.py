@@ -57,13 +57,13 @@ async def on_message(message):
 
     if message.content.startswith("$지급"):
         if message.author.id != 493659299609051136:
-            embed = discord.Embed(title = "응 메이커만 가능해~", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed = discord.Embed(title = "메이커만 사용 가능합니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
         else:
             if len(message.mentions) != 1:
-                embed = discord.Embed(title = "돈을 누구한테 차감할지 멘션해 줘!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                embed = discord.Embed(title = "멘션을 해주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                 embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
@@ -71,7 +71,7 @@ async def on_message(message):
                 try:
                     ti = int(open(str(message.mentions[0].id)+'.makerdollar','r').read())+int(message.content[4:].split(' ')[0])
                 except:
-                    embed = discord.Embed(title = "뭔가가 잘못됬어...", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed = discord.Embed(title = "얼마를 지급할지 입력해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                     embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                     embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                     await message.channel.send(embed = embed)
@@ -84,13 +84,13 @@ async def on_message(message):
 
     if message.content.startswith("$차감"):
         if message.author.id != 493659299609051136:
-            embed = discord.Embed(title = "응 메이커만 가능해~", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed = discord.Embed(title = "메이커만 사용 가능합니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
         else:
             if len(message.mentions) != 1:
-                embed = discord.Embed(title = "돈을 누구한테 차감할지 멘션해 줘!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                embed = discord.Embed(title = "멘션을 해주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                 embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
@@ -98,7 +98,7 @@ async def on_message(message):
                 try:
                     ti = int(open(str(message.mentions[0].id)+'.makerdollar','r').read())-int(message.content[4:].split(' ')[0])
                 except:
-                    embed = discord.Embed(title = "뭔가가 잘못됬어...", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed = discord.Embed(title = "얼마를 차감할지 입력해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                     embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                     embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                     await message.channel.send(embed = embed)
@@ -166,7 +166,7 @@ async def on_message(message):
         try:
             cost=int(message.content[4:].split(' ')[0])
         except:
-            embed = discord.Embed(title = "값을 입력해 줘!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed = discord.Embed(title = "얼마를 보낼 지 입력해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)

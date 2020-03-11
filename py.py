@@ -6,11 +6,13 @@ import os
 
 helped="""`$지갑` : 현재 내 MD를 확인합니다.
 `$지갑 <멘션>` : 유저의 MD를 확인합니다.
-`$지급` <돈> <멘션> : 유저에게 MD를 지급합니다. (메이커만 가능)
-`$차감` <돈> <멘션> : 유저에게 MD를 차감합니다. (메이커만 가능)
-`$도박` <돈> : 도박을 합니다. 40%확률로 모든 돈을 잃고, 45%확률로 돈을 돌려받고, 10%확률로 2배로 받고, 5%확률로 5배로 받습니다. 100MD 이상 걸 수 있습니다.
+`$지급 <돈> <멘션> `: 유저에게 MD를 지급합니다. (메이커만 가능)
+`$차감 <돈> <멘션>` : 유저에게 MD를 차감합니다. (메이커만 가능)
+`$도박 <돈>` : 도박을 합니다. 45% 확률로 돈을 돌려받고, 40% 확률로 모든 돈을 잃고, 10% 확률로 2배로 받고, 5% 확률로 5배로 받습니다. 100MD 이상 걸 수 있습니다.
 `$송금 <돈> <멘션>` : 유저에게 MD를 보냅니다.
-`$돈벌기 : 4시간마다 사용할 수 있으며 20~100MD를 벌 수 있습니다.`
+`$돈벌기` : 1시간마다 사용할 수 있으며 1000:makerdollar:~2000:makerdollar:를 법니다.
+`$출석체크` : 하루에 한번 1000:makerdollar:를 받습니다.
+`$도둑질 <멘션>` : 33% 확률로 1:makerdollar:~3000:makerdollar:를 훔쳐오고 67% 의 확률로 1:makerdollar:~3000:makerdollar:를 벌금으로 냅니다.
 """
 
 app = discord.Client()
@@ -36,18 +38,19 @@ async def on_message(message):
                         except:
                             open(str(member.id)+'.makerdollar', 'w').write('1000')
                             open(str(member.id)+'.work', 'w').write('nowork')
+                            open(str(member.id)+'.check', 'w').write('nocheck')
                             ax+=1
         await message.channel.send(str(ax) + "명이 세팅 되었습니다.")
 
     if message.content == "$지갑":
-        embed = discord.Embed(title = "너에겐 " + open(str(message.author.id)+'.makerdollar', 'r').read() + "MD가 있다!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+        embed = discord.Embed(title = open(str(message.author.id)+'.makerdollar', 'r').read() + ":makerdollar:", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
     elif message.content.startswith("$지갑"):
-        embed = discord.Embed(title = "그에겐 " + open(str(message.mentions[0].id)+'.makerdollar', 'r').read() + "MD가 있다!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
-        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+        embed = discord.Embed(title = open(str(message.mentions[0].id)+'.makerdollar', 'r').read() + ":makerdollar:", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+        embed.set_author(name = message.mentions[0].display_name, icon_url = message.mentions[0].avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
@@ -59,7 +62,7 @@ async def on_message(message):
             await message.channel.send(embed = embed)
         else:
             if len(message.mentions) != 1:
-                embed = discord.Embed(title = "돈을 누구한테 줄지 멘션해 줘!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                embed = discord.Embed(title = "돈을 누구한테 차감할지 멘션해 줘!", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                 embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
@@ -191,13 +194,13 @@ async def on_message(message):
     if message.content == "$돈벌기":
         worked=open(str(message.author.id)+'.work').read()
         if worked=="nowork":
-            mon=random.randint(20, 100)
+            mon=random.randint(1000, 2000)
             has=int(open(str(message.author.id)+'.makerdollar','r').read())
             open(str(message.author.id)+'.makerdollar','w').write(str(has+mon))
             time=datetime.datetime.now()
             haha=str(time.year)+' '+str(time.month)+' '+str(time.day)+' '+str(time.hour)+' '+str(time.minute)+' '+str(time.second)
             open(str(message.author.id)+'.work','w').write(haha)
-            embed = discord.Embed(title = "일을 해서 "+str(mon)+"MD를 벌었습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed = discord.Embed(title = "일을 해서 "+str(mon)+":makerdollar:를 벌었습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
@@ -206,7 +209,7 @@ async def on_message(message):
             tim=[]
             for x in range(len(timf)):
                 tim.append(int(timf[x]))
-            if datetime.datetime.utcnow()+timedelta(hours=9)>=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+timedelta(hours=4):
+            if datetime.datetime.utcnow()+timedelta(hours=9)>=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+timedelta(hours=1):
                 mon=random.randint(20, 100)
                 has=int(open(str(message.author.id)+'.makerdollar','r').read())
                 open(str(message.author.id)+'.makerdollar','w').write(str(has+mon))
@@ -218,11 +221,81 @@ async def on_message(message):
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
             else:
-                timd=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+datetime.timedelta(hours=4)
+                timd=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+datetime.timedelta(hours=1)
                 embed = discord.Embed(title = str(timd.month)+'월 '+str(timd.day)+'일 '+str(timd.hour)+'시 '+str(timd.minute)+'분 '+str(timd.second)+'초 부터 일을 할 수 있습니다.', color = 0x9966ff, timestamp = datetime.datetime.utcnow())
                 embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
 
+    if message.content == "$출석체크":
+        checked = open(str(message.author.id)+'.check', 'r').read()
+        time=datetime.datetime.utcnow()+timedelta(hours=9)
+        if checked=="nocheck":
+            has=int(open(str(message.author.id)+'.makerdollar','r').read())
+            open(str(message.author.id)+'.makerdollar','w').write(str(has+1000))
+            haha=str(time.year)+' '+str(time.month)+' '+str(time.day)
+            open(str(message.author.id)+'.check','w').write(haha)
+            embed = discord.Embed(title = "출석체크를 해서 1000:makerdollar:를 벌었습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+            await message.channel.send(embed = embed)
+        elif int(checked.split()[0])==time.year and int(checked.split()[1])==time.month and int(checked.split()[2])==time.day:
+            embed = discord.Embed(title = "내일 다시 시도해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+            await message.channel.send(embed = embed)
+        else:
+            has=int(open(str(message.author.id)+'.makerdollar','r').read())
+            open(str(message.author.id)+'.makerdollar','w').write(str(has+1000))
+            haha=str(time.year)+' '+str(time.month)+' '+str(time.day)
+            open(str(message.author.id)+'.check','w').write(haha)
+            embed = discord.Embed(title = "출석체크를 해서 1000:makerdollar:를 벌었습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+            await message.channel.send(embed = embed)
+
+    if message.content.startswith("$도둑질"):
+        if len(message.mentions)==1:
+            goed=random.randint(1,3)
+            cost=random.randint(1, 3000)
+            if goed==2:
+                hasb=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())
+                if cost>=hasb:
+                    embed = discord.Embed(title = "상대방의 전 재산인 "+str(hasb)+":makerdollar:를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                    await message.channel.send(embed = embed)
+                    open(str(message.mentions[0].id)+'.makerdollar','w').write('0')
+                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+hasb
+                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+                else:
+                    embed = discord.Embed(title = str(cost)+":makerdollar:를 훔쳐 버렸습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                    await message.channel.send(embed = embed)
+                    hasg=int(open(str(message.mentions[0].id)+'.makerdollar','r').read())-cost
+                    open(str(message.mentions[0].id)+'.makerdollar','w').write(str(hasg))
+                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())+cost
+                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+            else:
+                hasb=int(open(str(message.author.id)+'.makerdollar','r').read())
+                if cost>=hasb:
+                    embed = discord.Embed(title = str(random.randint(1, 3000))+":makerdollar:를 훔치려다 메이커에게 걸려 전 재산인 "+str(cost)+":makerdollar:를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                    await message.channel.send(embed = embed)
+                    open(str(message.author.id)+'.makerdollar','w').write("0")
+                else:
+                    embed = discord.Embed(title = str(random.randint(1, 3000))+":makerdollar:를 훔치려다 메이커에게 걸려 "+str(cost)+":makerdollar:를 벌금으로 냈습니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+                    embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+                    embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+                    await message.channel.send(embed = embed)
+                    hasg=int(open(str(message.author.id)+'.makerdollar','r').read())-cost
+                    open(str(message.author.id)+'.makerdollar','w').write(str(hasg))
+        else:
+            embed = discord.Embed(title = "도둑질할 사람을 멘션해 주세요.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+            embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+            embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+            await message.channel.send(embed = embed)
 
 app.run(os.environ["BOT_TOKEN"])

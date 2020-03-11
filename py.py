@@ -27,7 +27,7 @@ async def on_ready():
 
 @app.event
 async def on_message(message):
-    if message.content == "$세팅":
+    if message.content == "/세팅":
         ax = 0
         for guild in app.guilds:
             if guild == message.guild:
@@ -43,19 +43,19 @@ async def on_message(message):
                             ax+=1
         await message.channel.send(str(ax) + "명이 세팅 되었습니다.")
 
-    if message.content == "$지갑":
+    if message.content == "/지갑":
         embed = discord.Embed(title = open(str(message.author.id)+'.makerdollar', 'r').read() + ":makerdollar:", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
-    elif message.content.startswith("$지갑"):
+    elif message.content.startswith("/지갑"):
         embed = discord.Embed(title = open(str(message.mentions[0].id)+'.makerdollar', 'r').read() + ":makerdollar:", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.mentions[0].display_name, icon_url = message.mentions[0].avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
-    if message.content.startswith("$지급"):
+    if message.content.startswith("/지급"):
         if message.author.id != 493659299609051136:
             embed = discord.Embed(title = "메이커만 사용 가능합니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
@@ -82,7 +82,7 @@ async def on_message(message):
                     embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                     await message.channel.send(embed = embed)
 
-    if message.content.startswith("$차감"):
+    if message.content.startswith("/차감"):
         if message.author.id != 493659299609051136:
             embed = discord.Embed(title = "메이커만 사용 가능합니다.", color = 0x9966ff, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
@@ -109,7 +109,7 @@ async def on_message(message):
                     embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                     await message.channel.send(embed = embed)
 
-    if message.content.startswith("$도박"):
+    if message.content.startswith("/도박"):
         try:
             cost=int(message.content[4:])
         except:
@@ -156,13 +156,13 @@ async def on_message(message):
                     await message.channel.send(embed = embed)
                     open(str(message.author.id)+'.makerdollar','w').write(str(has+cost*4))
 
-    if message.content == "$도움":
+    if message.content == "/도움":
         embed = discord.Embed(title = "명령어가 작동을 안 할시 `$세팅`을 입력해 주세요.", description = helped, color = 0x9966ff, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
-    if message.content.startswith("$송금"):
+    if message.content.startswith("/송금"):
         try:
             cost=int(message.content[4:].split(' ')[0])
         except:
@@ -192,7 +192,7 @@ async def on_message(message):
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
 
-    if message.content == "$돈벌기":
+    if message.content == "/돈벌기":
         worked=open(str(message.author.id)+'.work').read()
         if worked=="nowork":
             mon=random.randint(1000, 2000)
@@ -228,7 +228,7 @@ async def on_message(message):
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)
 
-    if message.content == "$출석체크":
+    if message.content == "/출석체크":
         checked = open(str(message.author.id)+'.check', 'r').read()
         time=datetime.datetime.utcnow()+timedelta(hours=9)
         if checked=="nocheck":
@@ -255,7 +255,7 @@ async def on_message(message):
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
 
-    if message.content.startswith("$도둑질"):
+    if message.content.startswith("/도둑질"):
         if len(message.mentions)==1:
             goed=random.randint(1,3)
             cost=random.randint(1, 3000)
@@ -299,7 +299,7 @@ async def on_message(message):
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
 
-    if message.content == "$랭킹":
+    if message.content == "/랭킹":
         lists=open('list.txt','r').read().split('\n')
         listed=[]
         for x in lists:
@@ -318,4 +318,4 @@ async def on_message(message):
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
-app.run(os.environ["BOT_TOKEN"])
+app.run(os.environ("BOT_TOKEN"))

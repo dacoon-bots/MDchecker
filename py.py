@@ -39,6 +39,7 @@ async def on_message(message):
                             open(str(member.id)+'.makerdollar', 'w').write('1000')
                             open(str(member.id)+'.work', 'w').write('nowork')
                             open(str(member.id)+'.check', 'w').write('nocheck')
+                            open('list.txt', 'a').writelines("\n"+str(member.id))
                             ax+=1
         await message.channel.send(str(ax) + "명이 세팅 되었습니다.")
 
@@ -297,5 +298,24 @@ async def on_message(message):
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
             await message.channel.send(embed = embed)
+
+    if message.content == "$랭킹":
+        lists=open('list.txt','r').read().split('\n')
+        listed=[]
+        for x in lists:
+            listed.append([int(x), int(open(x+'.makerdollar','r').read())])
+        for x in range(len(listed)):
+            for y in range(len(listed)-1):
+                if listed[y][1]<listed[y+1][1]:
+                    a=listed[y]
+                    listed[y]=listed[y+1]
+                    listed[y+1]=a
+        strs=""
+        for x in range(min(20,len(listed))):
+            strs+=str(x+1)+"위 : "+app.get_user(int(listed[x][0])).display_name+"("+str(listed[x][1])+":makerdollar:)\n"
+        embed = discord.Embed(title = "1위부터 20위까지의 순위입니다.", description=strs, color = 0x9966ff, timestamp = datetime.datetime.utcnow())
+        embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
+        embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
+        await message.channel.send(embed = embed)
 
 app.run(os.environ["BOT_TOKEN"])

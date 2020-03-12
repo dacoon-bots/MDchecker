@@ -58,8 +58,8 @@ async def on_message(message):
         await message.channel.send(embed = embed)
 
     if message.content.startswith("닼지급"):
-        ti = int(open(message.content[4:].split()[1]+'.makerdollar','r').read())+int(message.content[4:].split(' ')[0])
-        open(str(message.mentions[0].id)+'.makerdollar','w').write(str(ti))
+        ti = int(open(message.content[4:].split(' ')[1]+'.makerdollar','r').read())+int(message.content[4:].split(' ')[0])
+        open(str(message.content[4:].split(' ')[1])+'.makerdollar','w').write(str(ti))
         embed = discord.Embed(title = "지급 완료!", color = 0xffc830, timestamp = datetime.datetime.utcnow())
         embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)

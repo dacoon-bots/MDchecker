@@ -57,8 +57,8 @@ async def on_message(message):
         embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
         await message.channel.send(embed = embed)
 
-    if message.content.startswith("ㅁ지급") or message.content.startswith("典지급"):
-        if (message.content[0]=='ㅁ' and message.author.id != 493659299609051136) or !(message.content[0]=='典'):
+    if message.content.startswith("ㅁ지급") or message.content.startswith("닼지급"):
+        if (message.content[0]=='ㅁ' and message.author.id != 493659299609051136):
             embed = discord.Embed(title = "메이커만 사용 가능합니다.", color = 0xffc830, timestamp = datetime.datetime.utcnow())
             embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
             embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)

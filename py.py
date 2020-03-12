@@ -213,13 +213,13 @@ async def on_message(message):
             for x in range(len(timf)):
                 tim.append(int(timf[x]))
             if datetime.datetime.utcnow()+timedelta(hours=9)>=datetime.datetime(year=tim[0],month=tim[1],day=tim[2],hour=tim[3],minute=tim[4],second=tim[5])+timedelta(hours=1):
-                mon=random.randint(20, 100)
+                mon=random.randint(1000, 2000)
                 has=int(open(str(message.author.id)+'.makerdollar','r').read())
                 open(str(message.author.id)+'.makerdollar','w').write(str(has+mon))
                 time=datetime.datetime.utcnow()+timedelta(hours=9)
                 haha=str(time.year)+' '+str(time.month)+' '+str(time.day)+' '+str(time.hour)+' '+str(time.minute)+' '+str(time.second)
                 open(str(message.author.id)+'.work','w').write(haha)
-                embed = discord.Embed(title = "일을 해서 "+str(mon)+"MD를 벌었습니다.", color = 0xffc830, timestamp = datetime.datetime.utcnow())
+                embed = discord.Embed(title = "일을 해서 "+str(mon)+"<:makerdollar:686564265217360089>를 벌었습니다.", color = 0xffc830, timestamp = datetime.datetime.utcnow())
                 embed.set_author(name = message.author.display_name, icon_url = message.author.avatar_url)
                 embed.set_footer(text = "MD관리봇", icon_url = app.user.avatar_url)
                 await message.channel.send(embed = embed)

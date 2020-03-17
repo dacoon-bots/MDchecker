@@ -173,7 +173,7 @@ async def on_message(message):
                 target=message.mentions[0]
             else:
                 target=finduser(message.content[5:])
-            if target==-1 or target==-2:
+            if target!=-1 and target!=-2:
                 can = random.randint(1,10)
                 st(message.author)
                 if 1<=can<=4:

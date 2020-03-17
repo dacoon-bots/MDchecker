@@ -4,7 +4,7 @@ import random
 import os
 
 datab={}
-manager={493659299609051136, 534145145109741569}
+manager={493659299609051136}
 
 helpdata="""
 `ㅁ지갑`
@@ -26,6 +26,8 @@ helpdata="""
   - 30%확률로 실패합니다.
   - 30%확률로 메이커에게 걸려 1000<:makerdollar:686564265217360089>~2000<:makerdollar:686564265217360089>를 벌금으로 냅니다.
   - 쿨타임 10분
+`ㅁ랭킹`
+  - 랭킹을 확인한다.
 """
 devoldata="""
 `ㅁ지급 <금액> <유저의 서버 별명 또는 멘션>`
@@ -39,7 +41,7 @@ app = discord.Client()
 @app.event
 async def on_ready():
     print("Login complete\n")
-    game = discord.Game("ㅁ도움")
+    game = discord.Game("베타 테스트 중입니다. 현재 갱신된 데이터는 정식 버전때 모두 날아갑니다.")
     await app.change_presence(status=discord.Status.online, activity=game)
 
 @app.event
@@ -205,6 +207,21 @@ async def on_message(message):
             embed = gnembed(str(stwait(message.author)[0])+"분 "+str(stwait(message.author)[1])+"초 후에 다시 도둑질할 수 있습니다.","", message.author)
             await message.channel.send(embed = embed)
 
+    if message.content == "ㅁ랭킹":
+        am=[]
+        for x in datab.keys():
+            am.append([datab[x][0], x])
+        count=min(20, len(datab))
+        for x in range(count):
+            for y in range(count-1):
+                if am[y][0]<am[y+1][0]:
+                    z=am[y]
+                    am[y]=am[y+1]
+                    am[y+1]=z
+        strs=""
+        for x in range(count):
+            strs+=str(x+1)+"위 : "+message.guild.get_member(am[x][1]).display_name+"("+str(am[x][0])+"<:makerdollar:686564265217360089>)\n"
+        await message.channel.send(embed = gnembed("랭킹",strs, message.author))
 
 def gnembed(title, description, author):
     embed = discord.Embed(title = title, description = description, color = 0xffcc00, timestamp = datetime.datetime.utcnow())

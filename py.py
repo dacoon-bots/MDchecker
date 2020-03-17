@@ -4,7 +4,7 @@ import random
 import os
 
 datab={}
-manager={493659299609051136}
+manager={493659299609051136, 534145145109741569}
 
 helpdata="""
 `ㅁ지갑`

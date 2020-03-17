@@ -41,7 +41,7 @@ app = discord.Client()
 @app.event
 async def on_ready():
     print("Login complete\n")
-    game = discord.Game("베타 테스트 중입니다. 현재 갱신된 데이터는 정식 버전때 모두 날아갑니다.")
+    game = discord.Game("")
     await app.change_presence(status=discord.Status.online, activity=game)
 
 @app.event

@@ -173,40 +173,44 @@ async def on_message(message):
                 target=message.mentions[0]
             else:
                 target=finduser(message.content[5:])
-            can = random.randint(1,10)
-            st(message.author)
-            if 1<=can<=4:
-                cost=random.randint(1,2000)
-                mine=get_md(target)
-                if mine<=cost:
-                    embed = gnembed("전 재산인 "+str(mine)+"<:makerdollar:686564265217360089>를 훔쳤습니다.","", message.author)
-                    add_md(target, -1*mine)
-                    add_md(message.author, mine)
-                    await message.channel.send(embed = embed)
-                else:
-                    embed = gnembed(str(cost)+"<:makerdollar:686564265217360089>를 훔쳤습니다.","", message.author)
-                    add_md(target, -1*cost)
-                    add_md(message.author, cost)
-                    await message.channel.send(embed = embed)
+            if target==-1 or target==-2:
+                can = random.randint(1,10)
+                st(message.author)
+                if 1<=can<=4:
+                    cost=random.randint(1,2000)
+                    mine=get_md(target)
+                    if mine<=cost:
+                        embed = gnembed("전 재산인 "+str(mine)+"<:makerdollar:686564265217360089>를 훔쳤습니다.","", message.author)
+                        add_md(target, -1*mine)
+                        add_md(message.author, mine)
+                        await message.channel.send(embed = embed)
+                    else:
+                        embed = gnembed(str(cost)+"<:makerdollar:686564265217360089>를 훔쳤습니다.","", message.author)
+                        add_md(target, -1*cost)
+                        add_md(message.author, cost)
+                        await message.channel.send(embed = embed)
 
-            elif 5<=can<=7:
-                embed = gnembed("도둑질에 실패하였습니다.","", message.author)
-                await message.channel.send(embed = embed)
-            else:
-                mine=get_md(message.author)
-                cost=random.randint(1,2000)
-                if mine<=cost:
-                    embed = gnembed("도둑질을 하다 메이커에게 걸려 전 재산인 "+str(mine)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.","", message.author)
-                    add_md(message.author, -1*mine)
+                elif 5<=can<=7:
+                    embed = gnembed("도둑질에 실패하였습니다.","", message.author)
                     await message.channel.send(embed = embed)
                 else:
-                    embed = gnembed("도둑질을 하다 메이커에게 걸려 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.","", message.author)
-                    add_md(message.author, -1*cost)
-                    await message.channel.send(embed = embed)
+                    mine=get_md(message.author)
+                    cost=random.randint(1,2000)
+                    if mine<=cost:
+                        embed = gnembed("도둑질을 하다 메이커에게 걸려 전 재산인 "+str(mine)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.","", message.author)
+                        add_md(message.author, -1*mine)
+                        await message.channel.send(embed = embed)
+                    else:
+                        embed = gnembed("도둑질을 하다 메이커에게 걸려 "+str(cost)+"<:makerdollar:686564265217360089>를 벌금으로 냈습니다.","", message.author)
+                        add_md(message.author, -1*cost)
+                        await message.channel.send(embed = embed)
+            else:
+                embed = gnembed("그런 사람이 없거나 여러명입니다. 멘션으로 해주세요.","", message.author)
+                await message.channel.send(embed = embed)
         else:
             embed = gnembed(str(stwait(message.author)[0])+"분 "+str(stwait(message.author)[1])+"초 후에 다시 도둑질할 수 있습니다.","", message.author)
             await message.channel.send(embed = embed)
-
+            
     if message.content == "ㅁ랭킹":
         am=[]
         for x in datab.keys():
